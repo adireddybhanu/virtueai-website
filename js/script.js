@@ -48,6 +48,13 @@ if (briefForm) {
     const phone = briefForm.elements['Phone'].value.trim();
     const problem = briefForm.elements['Problem'].value.trim();
 
+    // Show the confirmation first, so the visitor clearly sees their
+    // submission went through — this should never look like "it just
+    // opened my email app and did nothing."
+    briefForm.hidden = true;
+    const successEl = document.getElementById('briefFormSuccess');
+    if (successEl) successEl.hidden = false;
+
     if (SHEET_ENDPOINT && !SHEET_ENDPOINT.startsWith('PASTE_')) {
       const formData = new FormData();
       formData.append('name', name);
@@ -70,9 +77,5 @@ if (briefForm) {
       `&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailtoUrl;
-
-    briefForm.hidden = true;
-    const successEl = document.getElementById('briefFormSuccess');
-    if (successEl) successEl.hidden = false;
   });
 }
