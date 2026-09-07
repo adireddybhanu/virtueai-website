@@ -29,3 +29,28 @@ revealEls.forEach(el => observer.observe(el));
 
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// "Submit your problem" form — build a clean email instead of a raw form-post,
+// which avoids the browser's "insecure form" warning on mailto actions.
+const briefForm = document.getElementById('briefForm');
+if (briefForm) {
+  briefForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = briefForm.elements['Name'].value.trim();
+    const email = briefForm.elements['Email'].value.trim();
+    const problem = briefForm.elements['Problem'].value.trim();
+
+    const subject = `New enquiry from ${name}`;
+    const body =
+      `Name: ${name}\n` +
+      `Email: ${email}\n\n` +
+      `Problem:\n${problem}`;
+
+    const mailtoUrl =
+      `mailto:adireddybhanudatascience@gmail.com` +
+      `?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoUrl;
+  });
+}
