@@ -334,6 +334,10 @@ dd{margin:0;}
 }
 .brief-form input::placeholder,.brief-form textarea::placeholder{color:var(--muted);}
 .brief-form button{align-self:flex-start;margin-top:2px;cursor:pointer;}
+.form-success{
+  font-family:var(--font-mono);font-size:.9rem;color:var(--amber);
+  border:1px solid var(--line-strong);border-radius:4px;padding:14px 16px;margin:0;
+}
 
 /* ============ CONTACT / TRANSMIT PANEL ============ */
 .transmit-panel{

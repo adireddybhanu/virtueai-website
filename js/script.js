@@ -31,7 +31,14 @@ revealEls.forEach(el => observer.observe(el));
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // "Submit your problem" form — build a clean email instead of a raw form-post,
-// which avoids the browser's "insecure form" warning on mailto actions.
+// which avoids the browser's "insecure form" warning on mailto actions, and
+// also logs each submission (with a date) to a Google Sheet.
+
+// Paste the Google Apps Script Web App URL here once it's deployed — see
+// README.md for the one-time setup steps. Until then, sheet logging is
+// skipped silently and the email fallback still works on its own.
+const SHEET_ENDPOINT = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
 const briefForm = document.getElementById('briefForm');
 if (briefForm) {
   briefForm.addEventListener('submit', (e) => {
@@ -39,6 +46,14 @@ if (briefForm) {
     const name = briefForm.elements['Name'].value.trim();
     const email = briefForm.elements['Email'].value.trim();
     const problem = briefForm.elements['Problem'].value.trim();
+
+    if (SHEET_ENDPOINT && !SHEET_ENDPOINT.startsWith('PASTE_')) {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('problem', problem);
+      fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body: formData }).catch(() => {});
+    }
 
     const subject = `New enquiry from ${name}`;
     const body =
@@ -52,5 +67,9 @@ if (briefForm) {
       `&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailtoUrl;
+
+    briefForm.hidden = true;
+    const successEl = document.getElementById('briefFormSuccess');
+    if (successEl) successEl.hidden = false;
   });
 }
