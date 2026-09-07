@@ -45,12 +45,14 @@ if (briefForm) {
     e.preventDefault();
     const name = briefForm.elements['Name'].value.trim();
     const email = briefForm.elements['Email'].value.trim();
+    const phone = briefForm.elements['Phone'].value.trim();
     const problem = briefForm.elements['Problem'].value.trim();
 
     if (SHEET_ENDPOINT && !SHEET_ENDPOINT.startsWith('PASTE_')) {
       const formData = new FormData();
       formData.append('name', name);
       formData.append('email', email);
+      formData.append('phone', phone);
       formData.append('problem', problem);
       fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body: formData }).catch(() => {});
     }
@@ -58,7 +60,8 @@ if (briefForm) {
     const subject = `New enquiry from ${name}`;
     const body =
       `Name: ${name}\n` +
-      `Email: ${email}\n\n` +
+      `Email: ${email}\n` +
+      `Phone: ${phone}\n\n` +
       `Problem:\n${problem}`;
 
     const mailtoUrl =
