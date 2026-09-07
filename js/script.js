@@ -36,7 +36,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 // Paste the Google Apps Script Web App URL here once it's deployed — see
 // README.md for the one-time setup steps. Until then, submissions are
 // only shown as "sent" in the browser but are not actually saved anywhere.
-const SHEET_ENDPOINT = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbyLrzQ-AfEqMiFFzipAxb94tkEWdqlQU9P1TtbBWir-sMo2rTtirWWoq09uhrStfefc/exec";
 
 const briefForm = document.getElementById('briefForm');
 if (briefForm) {
